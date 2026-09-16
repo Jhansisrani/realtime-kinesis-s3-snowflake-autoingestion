@@ -4,11 +4,11 @@
 
 -- First test:
 -- S3 CSV files → Snowflake sales_data1
-COPY INTO sales_data1 FROM @sales_stg1
+COPY INTO sales_data_raw FROM @sales_stg1
 ON_ERROR = CONTINUE;
 
 
-SELECT * FROM sales_data1;
+SELECT * FROM sales_data_raw;
 
 
 -- ============================================================
@@ -20,7 +20,7 @@ SELECT * FROM sales_data1;
 
 CREATE OR REPLACE PIPE sales_datapipe1   AUTO_INGEST = TRUE
 AS
-COPY INTO sales_data1 FROM @sales_stg1
+COPY INTO sales_data_raw FROM @sales_stg1
 ON_ERROR = CONTINUE;
 
 
@@ -29,4 +29,4 @@ SHOW PIPES;
 
 
 -- Check loaded data.
-SELECT * FROM sales_data1;
+SELECT * FROM sales_data_raw;
