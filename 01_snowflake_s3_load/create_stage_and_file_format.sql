@@ -43,7 +43,7 @@ USE SCHEMA streaming;
 -- TARGET TABLE
 -- ============================================================
 
-CREATE TABLE sales_data1 (
+CREATE TABLE sales_data_raw (
     transaction_id INTEGER,
     timestamp TIMESTAMP,
     customer_id INTEGER,
