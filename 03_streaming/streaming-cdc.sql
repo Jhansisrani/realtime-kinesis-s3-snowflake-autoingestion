@@ -7,15 +7,15 @@ USE DATABASE janu_kinesis;
 USE SCHEMA streaming;
 
 -- Source table where new/changed sales records arrive.
-CREATE OR REPLACE TABLE sales_data_raw (
-    transaction_id INTEGER,
-    timestamp TIMESTAMP,
-    customer_id INTEGER,
-    product_id INTEGER,
-    quantity INTEGER,
-    price_per_unit FLOAT,
-    total_price FLOAT
-);
+--CREATE OR REPLACE TABLE sales_data_raw (
+  --  transaction_id INTEGER,
+   -- timestamp TIMESTAMP,
+   -- customer_id INTEGER,
+  --  product_id INTEGER,
+--    quantity INTEGER,
+--    price_per_unit FLOAT,
+--    total_price FLOAT
+--);
 
 -- Production/target table.
 CREATE OR REPLACE TABLE sales_data_prod (
