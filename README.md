@@ -21,7 +21,7 @@ Snowflake Streams, Tasks, and MERGE logic are used to demonstrate incremental ch
               |                         |
               ↓                         ↓
         Amazon Kinesis              CSV Creation
-        bepec-e2e-stream                 |
+       sales-e2e-stream                 |
                                         ↓
                                   Amazon S3 Bucket
                                         |
@@ -32,7 +32,7 @@ Snowflake Streams, Tasks, and MERGE logic are used to demonstrate incremental ch
                                     Snowpipe
                                         |
                                         ↓
-                                  sales_data1
+                                  sales_data_raw 
                               (Raw / Landing Table)
                                         |
                                         ↓
@@ -100,7 +100,7 @@ Boto3 is used to communicate with AWS services.
 Generated sales records are published to the Kinesis stream:
 
 ```text
-bepec-e2e-stream
+sales-e2e-stream
 ```
 
 The transaction ID is used as the Kinesis partition key.
@@ -110,13 +110,13 @@ The transaction ID is used as the Kinesis partition key.
 The same generated sales records are converted into CSV format and uploaded to:
 
 ```text
-s3://snowflake-ingest-data/
+s3://<path>/
 ```
 
 Using the project prefix:
 
 ```text
-bepec_marketing/bepec-snowflake-stream/
+<path>/snowflake-stream/
 ```
 
 ### 4. Snowflake External Stage
@@ -140,17 +140,17 @@ S3
  ↓
 Snowpipe
  ↓
-sales_data1
+sales_data_raw 
 ```
 
-`sales_data1` acts as the **raw/landing table** in this project because the incoming S3 data is loaded directly into it.
+`sales_data_raw ` acts as the **raw/landing table** in this project because the incoming S3 data is loaded directly into it.
 
 ### 6. Snowflake Stream
 
-A standard Snowflake Stream is created on `sales_data1` to capture changes occurring after the Stream is created.
+A standard Snowflake Stream is created on `sales_data_raw ` to capture changes occurring after the Stream is created.
 
 ```text
-sales_data1
+sales_data_raw 
       ↓
 sales_data_stream
 ```
@@ -226,7 +226,7 @@ Used Snowpipe to demonstrate automated ingestion of newly arriving files.
 
 ### Raw / Landing Layer
 
-Used `sales_data1` as the landing table receiving data from Snowpipe.
+Used `sales_data_raw ` as the landing table receiving data from Snowpipe.
 
 ### Streams
 
@@ -303,7 +303,7 @@ SHOW PIPES;
 
 SHOW TASKS;
 
-SELECT * FROM sales_data1;
+SELECT * FROM sales_data_raw;
 
 SELECT * FROM sales_data_prod;
 ```
@@ -316,7 +316,7 @@ These checks were used to verify file availability, Snowpipe configuration, Task
 
 AWS credentials and other sensitive connection information are **not stored in this repository**.
 
-Boto3 credentials should be configured using secure AWS credential mechanisms rather than hardcoded in Python source code.
+Boto3 credentials should be configured using secure AWS credential mechanisms rather than hard-coded in Python source code.
 
 ---
 
